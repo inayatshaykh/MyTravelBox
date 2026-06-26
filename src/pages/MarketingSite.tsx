@@ -37,40 +37,58 @@ export default function MarketingSite() {
 function HeroSection({ nav }: { nav:(p:string)=>void }) {
   return (
     <section className="relative flex items-center overflow-hidden" style={{ minHeight:'92vh' }} id="about">
-      <img src={P.hero} alt="School student dreaming of the world" loading="eager"
+      {/* Hero photo — students writing in a classroom */}
+      <img src={P.hero} alt="Students studying and writing in a classroom"
+        loading="eager"
         className="absolute inset-0 w-full h-full object-cover object-center"
-        style={{ filter:'brightness(0.68) saturate(1.15)' }} />
+        style={{ filter:'brightness(0.55) saturate(1.1)' }}
+      />
+      {/* Strong left-side gradient so left-aligned text stays readable */}
       <div className="absolute inset-0" style={{
-        background:'linear-gradient(100deg,rgba(44,12,2,0.84) 0%,rgba(90,40,10,0.62) 45%,rgba(200,130,50,0.16) 100%)'
+        background:'linear-gradient(95deg, rgba(20,8,2,0.88) 0%, rgba(50,20,5,0.72) 40%, rgba(100,50,10,0.25) 75%, transparent 100%)'
       }}/>
+      {/* Bottom fade */}
       <div className="absolute inset-0" style={{
-        background:'linear-gradient(to top,rgba(30,8,0,0.35) 0%,transparent 35%)'
+        background:'linear-gradient(to top, rgba(20,8,2,0.4) 0%, transparent 30%)'
       }}/>
 
       <div className="relative z-10 w-full max-w-[1200px] mx-auto px-5 sm:px-8 py-16 sm:py-24 md:py-32">
-        <div className="inline-flex items-center gap-2 bg-black/30 backdrop-blur-sm border border-white/20
-          text-white/88 text-[10px] font-bold tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full mb-6">
+
+        {/* Badge */}
+        <div className="inline-flex items-center gap-2 bg-black/35 backdrop-blur-sm border border-white/20
+          text-white/90 text-[10px] font-bold tracking-[0.18em] uppercase px-3.5 py-1.5 rounded-full mb-6">
           For IB &amp; India's Premium Schools
         </div>
 
-        <h1 className="font-fraunces text-white max-w-[600px]" style={{
-          fontSize:'clamp(34px,5.5vw,68px)', lineHeight:1.06,
-          letterSpacing:'-0.02em', textShadow:'0 2px 24px rgba(0,0,0,0.35)'
+        {/* Headline — directly reflects students writing/studying in classroom */}
+        <h1 className="font-fraunces text-white max-w-[580px]" style={{
+          fontSize: 'clamp(34px, 5.5vw, 68px)',
+          lineHeight: 1.06,
+          letterSpacing: '-0.02em',
+          textShadow: '0 2px 30px rgba(0,0,0,0.5)',
         }}>
-          The walls of a<br/>classroom<br/>can hold{' '}
-          <em className="not-italic" style={{ color:'#E87521', textShadow:'0 0 40px rgba(232,117,33,0.5)' }}>
-            a whole world.
+          Every pencil held<br/>today shapes{' '}
+          <em className="not-italic" style={{
+            color: '#E87521',
+            textShadow: '0 0 40px rgba(232,117,33,0.6)',
+          }}>
+            tomorrow's explorer.
           </em>
         </h1>
 
-        <p className="text-white/82 mt-5 font-light max-w-[420px]" style={{
-          fontSize:'clamp(13px,1.4vw,16px)', lineHeight:1.72, textShadow:'0 1px 8px rgba(0,0,0,0.3)'
+        {/* Sub — relevant to students writing / learning */}
+        <p className="text-white/90 mt-5 max-w-[440px]" style={{
+          fontSize: 'clamp(13.5px,1.4vw,16px)',
+          lineHeight: 1.72,
+          textShadow: '0 1px 12px rgba(0,0,0,0.6)',
+          fontWeight: 400,
         }}>
-          Every great journey begins with a student staring out of a window.
-          My Travel Box turns that quiet curiosity into curriculum-led
-          international travel for India's finest schools.
+          Behind every focused student is the spark of curiosity waiting to go global.
+          My Travel Box takes what they learn in the classroom and brings it alive —
+          through world-class curriculum-led tours for India's finest schools.
         </p>
 
+        {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 mt-8">
           <button onClick={() => nav('/register')}
             className="bg-[#E87521] hover:opacity-90 text-white font-bold rounded-full shadow-lg w-fit transition-opacity"
@@ -78,13 +96,14 @@ function HeroSection({ nav }: { nav:(p:string)=>void }) {
             Begin the journey →
           </button>
           <button onClick={() => document.querySelector('#programs')?.scrollIntoView({ behavior:'smooth' })}
-            className="bg-white/12 hover:bg-white/22 backdrop-blur-sm border border-white/30
+            className="bg-white/15 hover:bg-white/25 backdrop-blur-sm border border-white/35
               text-white font-semibold rounded-full w-fit transition-all"
             style={{ padding:'12px 28px', fontSize:14 }}>
             See programs
           </button>
         </div>
 
+        {/* Scroll hint */}
         <div className="hidden sm:flex absolute bottom-7 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 pointer-events-none">
           <span className="text-[8.5px] font-bold tracking-[0.24em] text-white/40 uppercase">Scroll · The World Opens</span>
           <div className="w-px h-7 bg-white/18"/>

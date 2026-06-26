@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import MTBLogo from '../ui/MTBLogo'
 
 const navLinks = [
   { label: 'About MTB',            href: '#about' },
@@ -9,29 +10,6 @@ const navLinks = [
   { label: 'Parent Portal',        href: '/onboarding' },
   { label: 'Principal Portal',     href: '/login' },
 ]
-
-/* ── Exact MTB logo SVG (box icon + stylised wordmark) ── */
-function MTBLogo() {
-  return (
-    <svg viewBox="0 0 120 38" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-[34px] w-auto">
-      {/* Box icon */}
-      <rect x="1" y="6" width="26" height="26" rx="3" fill="#E87521"/>
-      <path d="M1 14h26" stroke="white" strokeWidth="1.8"/>
-      <path d="M14 14v18" stroke="white" strokeWidth="1.8"/>
-      <path d="M8 6 L14 2 L20 6" stroke="white" strokeWidth="1.6" strokeLinejoin="round" fill="none"/>
-      {/* "My" */}
-      <text x="31" y="20" fontFamily="Georgia,serif" fontSize="11" fontWeight="700" fill="#2C1A0E">My</text>
-      {/* "Travel" in orange italic */}
-      <text x="31" y="31" fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fontStyle="italic" fill="#E87521">Travel</text>
-      {/* "Box" */}
-      <text x="79" y="31" fontFamily="Georgia,serif" fontSize="13" fontWeight="700" fill="#2C1A0E">Box</text>
-      {/* dot after Box */}
-      <circle cx="107" cy="28" r="1.5" fill="#E87521"/>
-      {/* tagline */}
-      <text x="31" y="38" fontFamily="Arial,sans-serif" fontSize="5.5" letterSpacing="0.5" fill="#9C8170">Surprising You Everyday</text>
-    </svg>
-  )
-}
 
 export default function SiteHeader() {
   const navigate = useNavigate()

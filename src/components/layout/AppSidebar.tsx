@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import MTBLogo from '../ui/MTBLogo'
 
 interface SidebarProps {
   activeItem: string
@@ -81,12 +82,7 @@ export default function AppSidebar({ activeItem, onNavigate }: SidebarProps) {
           onKeyDown={e => e.key === 'Enter' && navigate('/')}
           aria-label="MyTravelBox home"
         >
-          <span className="font-fraunces font-semibold text-ink text-[16px]">
-            My<span className="text-amber">Travel</span>Box
-          </span>
-          <p className="text-[9px] font-bold tracking-[0.1em] text-ink-faint uppercase mt-1">
-            Learn. Explore. Grow.
-          </p>
+          <MTBLogo height="32px" />
         </div>
 
         {/* User chip */}
