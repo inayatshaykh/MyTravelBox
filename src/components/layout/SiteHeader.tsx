@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import Button from '../ui/Button'
 import { useAuth } from '../../context/AuthContext'
 
 const navLinks = [
-  { label: 'School Programs', href: '#programs' },
-  { label: 'Destinations',    href: '#destinations' },
-  { label: 'Safety & Risk',   href: '#safety' },
-  { label: 'About Us',        href: '#about' },
-  { label: 'Testimonials',    href: '#testimonials' },
+  { label: 'About MTB',         href: '#about' },
+  { label: 'Explore our Programs', href: '#programs' },
+  { label: 'Tours in Motion',   href: '#tours' },
+  { label: 'Parent Portal',     href: '/onboarding' },
+  { label: 'Principal Portal',  href: '/login' },
 ]
 
 export default function SiteHeader() {
@@ -19,162 +18,143 @@ export default function SiteHeader() {
 
   const isHome = location.pathname === '/'
 
-  function handleLogout() {
-    logout()
-    navigate('/')
+  function handleNav(href: string) {
     setMenuOpen(false)
+    if (href.startsWith('/')) navigate(href)
+    else {
+      const el = document.querySelector(href)
+      el?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
-    <header
-      className="sticky top-0 z-40 border-b border-line"
-      style={{ background: 'rgba(250,247,242,0.92)', backdropFilter: 'blur(14px)' }}
-    >
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-3">
+    <header className="sticky top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E8DDD0]">
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-8 h-[60px] flex items-center justify-between gap-4">
 
         {/* ── Logo ── */}
-        <div
-          className="flex items-center gap-2 sm:gap-3 cursor-pointer flex-shrink-0"
+        <button
           onClick={() => navigate('/')}
-          role="link"
-          tabIndex={0}
-          onKeyDown={e => e.key === 'Enter' && navigate('/')}
-          aria-label="MyTravelBox home"
+          className="flex items-center gap-2 flex-shrink-0 hover:opacity-80 transition-opacity"
+          aria-label="My Travel Box home"
         >
-          <span className="font-fraunces font-semibold text-ink text-[16px] sm:text-[17px]">
-            My<span className="text-amber">Travel</span>Box
-          </span>
-          <span className="hidden sm:inline text-[10px] font-bold tracking-[0.13em] text-ink-faint uppercase pl-3 border-l border-line whitespace-nowrap">
-            Learn. Explore. Grow.
-          </span>
-        </div>
+          {/* Box icon */}
+          <div className="w-8 h-8 bg-amber rounded-lg flex items-center justify-center flex-shrink-0">
+            <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5 text-white">
+              <path d="M21 8H3M21 8l-2 12H5L3 8M21 8l-9-4-9 4M12 8v12M9 12h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+          <div className="leading-none">
+            <div className="font-fraunces font-semibold text-[15px] sm:text-[16px] text-ink">
+              My <span className="text-amber">Travel</span> Box
+            </div>
+            <div className="text-[8px] font-semibold tracking-[0.12em] text-ink-faint uppercase hidden sm:block">
+              Surprising You Everyday
+            </div>
+          </div>
+        </button>
 
-        {/* ── Desktop nav (only on home page) ── */}
+        {/* ── Desktop nav ── */}
         {isHome && (
-          <nav className="hidden lg:flex gap-6 items-center" aria-label="Main navigation">
+          <nav className="hidden lg:flex items-center gap-6" aria-label="Main navigation">
             {navLinks.map(link => (
-              <a
+              <button
                 key={link.label}
-                href={link.href}
-                className="text-[13px] font-medium text-ink-soft hover:text-ink transition-colors duration-150 whitespace-nowrap"
+                onClick={() => handleNav(link.href)}
+                className="text-[13px] font-medium text-ink-soft hover:text-ink transition-colors whitespace-nowrap"
               >
                 {link.label}
-              </a>
+              </button>
             ))}
           </nav>
         )}
 
-        {/* ── Right actions ── */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        {/* ── Right CTA ── */}
+        <div className="flex items-center gap-2 flex-shrink-0">
           {isLoggedIn ? (
             <>
-              {/* Avatar + name */}
               <button
                 onClick={() => navigate('/dashboard')}
-                className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl border border-line hover:border-amber hover:bg-amber-soft/30 transition-all"
-                aria-label="Go to dashboard"
+                className="hidden sm:flex items-center gap-2 text-[13px] font-semibold text-ink hover:text-amber transition-colors"
               >
-                <div className="w-7 h-7 rounded-full bg-amber-soft text-amber-deep font-fraunces font-semibold text-[12px] flex items-center justify-center flex-shrink-0">
+                <div className="w-7 h-7 rounded-full bg-amber-soft text-amber-deep font-fraunces font-semibold text-[11px] flex items-center justify-center">
                   {user?.avatar}
                 </div>
-                <span className="text-[12.5px] font-semibold text-ink max-w-[100px] truncate">{user?.name}</span>
+                Dashboard
               </button>
-              <Button variant="ghost" onClick={handleLogout} className="text-[12.5px] py-2 px-3">
+              <button
+                onClick={() => { logout(); navigate('/') }}
+                className="text-[12.5px] font-semibold text-ink-faint hover:text-terracotta transition-colors px-2"
+              >
                 Sign Out
-              </Button>
+              </button>
             </>
           ) : (
             <>
-              <Button
-                variant="ghost"
+              <button
                 onClick={() => navigate('/login')}
-                className="text-[12.5px] sm:text-[13.5px] py-2 sm:py-[11px] px-3 sm:px-[18px]"
+                className="hidden sm:block text-[13px] font-medium text-ink-soft hover:text-ink transition-colors px-3 py-2"
               >
                 Login
-              </Button>
-              <Button
-                variant="primary"
+              </button>
+              <button
                 onClick={() => navigate('/register')}
-                className="text-[12.5px] sm:text-[13.5px] py-2 sm:py-[11px] px-3 sm:px-5 hidden sm:inline-flex"
+                className="bg-amber hover:opacity-90 text-white font-bold text-[13px] px-4 sm:px-5 py-2 sm:py-2.5 rounded-full transition-opacity"
               >
-                Request Proposal
-              </Button>
+                Plan a tour
+              </button>
             </>
           )}
 
-          {/* ── Hamburger (mobile) ── */}
+          {/* Hamburger */}
           <button
-            className="flex flex-col justify-center items-center w-9 h-9 gap-[5px] rounded-lg focus-visible:ring-2 focus-visible:ring-amber focus-visible:outline-none lg:hidden"
             onClick={() => setMenuOpen(v => !v)}
+            className="lg:hidden w-9 h-9 flex flex-col justify-center items-center gap-[5px] rounded-lg"
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={menuOpen}
           >
-            <span className={`block w-5 h-[2px] bg-ink rounded transition-all duration-200 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-ink rounded transition-all duration-200 ${menuOpen ? 'opacity-0 scale-x-0' : ''}`} />
-            <span className={`block w-5 h-[2px] bg-ink rounded transition-all duration-200 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+            <span className={`w-5 h-[2px] bg-ink rounded transition-all duration-200 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+            <span className={`w-5 h-[2px] bg-ink rounded transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`w-5 h-[2px] bg-ink rounded transition-all duration-200 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
           </button>
         </div>
       </div>
 
-      {/* ── Mobile menu drawer ── */}
+      {/* ── Mobile drawer ── */}
       {menuOpen && (
-        <div className="lg:hidden border-t border-line bg-paper shadow-md">
-          {/* Nav links (home page only) */}
+        <div className="lg:hidden border-t border-[#E8DDD0] bg-[#FAF7F2] shadow-lg">
           {isHome && (
-            <div className="px-4 pt-3 pb-1">
+            <div className="px-5 pt-3 pb-2">
               {navLinks.map(link => (
-                <a
+                <button
                   key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center text-[14px] font-medium text-ink-soft py-3 border-b border-line/50 last:border-0 hover:text-ink transition-colors"
+                  onClick={() => handleNav(link.href)}
+                  className="w-full text-left text-[14px] font-medium text-ink-soft py-3 border-b border-[#E8DDD0] last:border-0 hover:text-amber transition-colors"
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
             </div>
           )}
-
-          {/* Auth section */}
-          <div className="px-4 py-4 flex flex-col gap-2.5">
+          <div className="px-5 py-4 flex flex-col gap-2.5">
             {isLoggedIn ? (
               <>
-                {/* User info */}
-                <div className="flex items-center gap-3 bg-paper-raised border border-line rounded-xl px-3 py-2.5">
-                  <div className="w-9 h-9 rounded-full bg-amber-soft text-amber-deep font-fraunces font-semibold text-[14px] flex items-center justify-center flex-shrink-0">
-                    {user?.avatar}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-[14px] font-semibold text-ink truncate">{user?.name}</div>
-                    <div className="text-[11.5px] text-ink-faint truncate">{user?.email}</div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => { navigate('/dashboard'); setMenuOpen(false) }}
-                  className="w-full bg-ink text-paper font-bold text-[14px] py-3 rounded-xl hover:opacity-90 transition-opacity"
-                >
+                <button onClick={() => { navigate('/dashboard'); setMenuOpen(false) }}
+                  className="w-full bg-ink text-paper font-bold text-[14px] py-3 rounded-full">
                   Go to Dashboard
                 </button>
-                <button
-                  onClick={handleLogout}
-                  className="w-full border border-line text-ink-soft font-semibold text-[14px] py-3 rounded-xl hover:border-terracotta hover:text-terracotta transition-colors"
-                >
+                <button onClick={() => { logout(); navigate('/'); setMenuOpen(false) }}
+                  className="w-full border border-[#E8DDD0] text-ink-soft font-semibold text-[14px] py-3 rounded-full">
                   Sign Out
                 </button>
               </>
             ) : (
               <>
-                <button
-                  onClick={() => { navigate('/login'); setMenuOpen(false) }}
-                  className="w-full bg-ink text-paper font-bold text-[14px] py-3 rounded-xl hover:opacity-90 transition-opacity"
-                >
+                <button onClick={() => { navigate('/login'); setMenuOpen(false) }}
+                  className="w-full border border-[#E8DDD0] text-ink font-semibold text-[14px] py-3 rounded-full">
                   Login
                 </button>
-                <button
-                  onClick={() => { navigate('/register'); setMenuOpen(false) }}
-                  className="w-full bg-amber text-white font-bold text-[14px] py-3 rounded-xl hover:opacity-90 transition-opacity"
-                >
-                  Request Proposal
+                <button onClick={() => { navigate('/register'); setMenuOpen(false) }}
+                  className="w-full bg-amber text-white font-bold text-[14px] py-3 rounded-full">
+                  Plan a tour
                 </button>
               </>
             )}
