@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============ GLOBAL BASE ============ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #FBF6EE;
+  color: #4A2E22;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* ============ FLOAT ANIMATION ============ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+.animate-float-1 {
+  animation: float 6s ease-in-out 1.2s infinite;
+}
+.animate-float-2 {
+  animation: float 6s ease-in-out 2.4s infinite;
+}
+.animate-float-3 {
+  animation: float 6s ease-in-out 0.6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-1,
+  .animate-float-2,
+  .animate-float-3 {
+    animation: none;
+  }
+}
+
+/* ============ SCROLLBAR ============ */
+.manifest-strip::-webkit-scrollbar {
+  height: 6px;
+}
+.manifest-strip::-webkit-scrollbar-thumb {
+  background: #EBDFD0;
+  border-radius: 100px;
+}
+
+/* ============ OTP INPUT ============ */
+.otp-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  border: 1.5px solid #EBDFD0;
+  border-radius: 12px;
+  font-family: 'Fraunces', serif;
+  background: #FBF6EE;
+  color: #4A2E22;
+  transition: border-color 0.15s;
+}
+.otp-box:focus {
+  outline: none;
+  border-color: #E87521;
+}
+
+/* ============ TICKET PERFORATION ============ */
+.ticket-perf {
+  position: relative;
+  height: 1px;
+  background: #EBDFD0;
+}
+.ticket-perf::before,
+.ticket-perf::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #4A2E22;
+  border-radius: 50%;
+  top: -10px;
+}
+.ticket-perf::before { left: -10px; }
+.ticket-perf::after { right: -10px; }
+
+/* ============ PASS PERFORATION ============ */
+.perforation {
+  position: relative;
+  height: 1px;
+  background: rgba(250,247,242,0.18);
+  margin-top: 18px;
+}
+.perforation::before,
+.perforation::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: #FBF6EE;
+  border-radius: 50%;
+  top: -10px;
+}
+.perforation::before { left: -10px; }
+.perforation::after { right: -10px; }
+
+/* ============ ACCENT COLOR ============ */
+input[type="checkbox"] {
+  accent-color: #E87521;
+}
+
+/* ============ RING TRANSITION ============ */
+#ringProgress {
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* ============ FOCUS VISIBLE ============ */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #E87521;
+  outline-offset: 2px;
+}
+
+/* ============ CUSTOM SCROLLBAR (firefox) ============ */
+.manifest-strip {
+  scrollbar-width: thin;
+  scrollbar-color: #EBDFD0 transparent;
+}
