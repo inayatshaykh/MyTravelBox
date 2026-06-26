@@ -1,22 +1,47 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider, useAuth } from './context/AuthContext'
+import type { ReactNode } from 'react'
+
 import MarketingSite from './pages/MarketingSite'
+import LoginPage from './pages/LoginPage'
 import RegistrationFlow from './pages/RegistrationFlow'
 import ParentOnboarding from './pages/ParentOnboarding'
 import ParentDashboard from './pages/ParentDashboard'
 import DeliverablesCenter from './pages/DeliverablesCenter'
 import DeparturePage from './pages/DeparturePage'
 
+// Redirect to login if not authenticated
+function Protected({ children }: { children: ReactNode }) {
+  const { isLoggedIn } = useAuth()
+  return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />
+}
+
+function AppRoutes() {
+  return (
+    <Routes>
+      {/* Public */}
+      <Route path="/"          element={<MarketingSite />} />
+      <Route path="/login"     element={<LoginPage />} />
+      <Route path="/register"  element={<RegistrationFlow />} />
+
+      {/* Protected */}
+      <Route path="/onboarding"   element={<Protected><ParentOnboarding /></Protected>} />
+      <Route path="/dashboard"    element={<Protected><ParentDashboard /></Protected>} />
+      <Route path="/deliverables" element={<Protected><DeliverablesCenter /></Protected>} />
+      <Route path="/departure"    element={<Protected><DeparturePage /></Protected>} />
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  )
+}
+
 export default function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<MarketingSite />} />
-        <Route path="/register" element={<RegistrationFlow />} />
-        <Route path="/onboarding" element={<ParentOnboarding />} />
-        <Route path="/dashboard" element={<ParentDashboard />} />
-        <Route path="/deliverables" element={<DeliverablesCenter />} />
-        <Route path="/departure" element={<DeparturePage />} />
-      </Routes>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </HashRouter>
   )
 }

@@ -85,3 +85,26 @@ export interface KeyContact {
   name: string;
   phone: string;
 }
+
+// ── Auth ──────────────────────────────────────────────
+export type UserRole =
+  | 'director'
+  | 'branch_manager'
+  | 'operations'
+  | 'sales'
+  | 'visa_team'
+  | 'accounts'
+  | 'tour_manager'
+  | 'parent';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  password: string;       // plain text for demo only
+  role: UserRole;
+  avatar: string;         // initials
+  tourId?: string;        // for parents
+  school?: string;
+  phone?: string;
+}
