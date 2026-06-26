@@ -22,7 +22,7 @@ const roleRedirect: Record<UserRole, string> = {
   sales:          '/dashboard',
   visa_team:      '/dashboard',
   accounts:       '/dashboard',
-  tour_manager:   '/departure',
+  tour_manager:   '/dashboard',
   parent:         '/onboarding',
 }
 

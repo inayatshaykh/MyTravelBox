@@ -6,11 +6,10 @@ import MarketingSite from './pages/MarketingSite'
 import LoginPage from './pages/LoginPage'
 import RegistrationFlow from './pages/RegistrationFlow'
 import ParentOnboarding from './pages/ParentOnboarding'
-import ParentDashboard from './pages/ParentDashboard'
+import DashboardRouter from './pages/DashboardRouter'
 import DeliverablesCenter from './pages/DeliverablesCenter'
 import DeparturePage from './pages/DeparturePage'
 
-// Redirect to login if not authenticated
 function Protected({ children }: { children: ReactNode }) {
   const { isLoggedIn } = useAuth()
   return isLoggedIn ? <>{children}</> : <Navigate to="/login" replace />
@@ -20,13 +19,13 @@ function AppRoutes() {
   return (
     <Routes>
       {/* Public */}
-      <Route path="/"          element={<MarketingSite />} />
-      <Route path="/login"     element={<LoginPage />} />
-      <Route path="/register"  element={<RegistrationFlow />} />
+      <Route path="/"         element={<MarketingSite />} />
+      <Route path="/login"    element={<LoginPage />} />
+      <Route path="/register" element={<RegistrationFlow />} />
 
-      {/* Protected */}
+      {/* Protected — role-aware */}
+      <Route path="/dashboard"    element={<Protected><DashboardRouter /></Protected>} />
       <Route path="/onboarding"   element={<Protected><ParentOnboarding /></Protected>} />
-      <Route path="/dashboard"    element={<Protected><ParentDashboard /></Protected>} />
       <Route path="/deliverables" element={<Protected><DeliverablesCenter /></Protected>} />
       <Route path="/departure"    element={<Protected><DeparturePage /></Protected>} />
 
